@@ -36,3 +36,7 @@ subtract(2,3);
 multiply(2, 4);
 divide(10,2);
 operate("add", 5, 3);
+
+const displayValue = document.querySelector("#display");
+console.log(displayValue)
+displayValue.innerHTML = "Hello World!";

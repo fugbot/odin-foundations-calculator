@@ -1,0 +1,28 @@
+#display, #calculator {
+    max-width: 120px;
+}
+
+#display{
+    border: 1px solid black;
+    margin: 5px;
+}
+#calculator {
+    
+    max-height: max-content;
+    display: flex;
+    border: solid black 2px;
+}
+
+.numbers {
+    display: flex;
+    flex-wrap: wrap;
+    border: solid blue 2px;
+    justify-content: space-between;
+    
+}
+
+.operators {
+    display: flex;
+    flex-direction: column;
+    border: solid red 2px;
+}
