@@ -5,9 +5,9 @@
 #display{
     border: 1px solid black;
     margin: 5px;
-    text-align: right;
 }
 #calculator {
+    
     max-height: max-content;
     display: flex;
     border: solid black 2px;
@@ -24,8 +24,5 @@
 .operators {
     display: flex;
     flex-direction: column;
-}
-
-.operators button {
-    background-color: red;
+    border: solid red 2px;
 }
