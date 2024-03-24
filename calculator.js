@@ -1,6 +1,7 @@
 let firstNum;
 let operator;
 let secondNum;
+let finalResult = 0;
 
 function operate(operator, num1, num2) {
   if (operator === "+") {
@@ -15,65 +16,93 @@ function operate(operator, num1, num2) {
 }
 
 function add(a, b) {
-  console.log(a + b);
+  result = a+b;
+  return result;
 }
 
 function subtract(a, b) {
-  console.log(a - b);
+  return (a - b);
 }
 
 function multiply(a, b) {
-  console.log(a * b);
+  return (a * b);
 }
 
 function divide(a, b) {
-  console.log(a / b);
+  return (a / b);
 }
 
-add(0, 5);
-subtract(2, 3);
-multiply(2, 4);
-divide(10, 2);
-operate("add", 5, 3);
-
-const displayOutput = document.querySelector("#display");
-let firstDisplayValue = "";
-let secondDisplayValue = "";
+const displayElem = document.querySelector("#display");
+let displayValueWithZero = displayElem.innerHTML;
+let displayValue = "";
 const clearBtn = document.querySelector("#clear");
 const equalsBtn = document.querySelector("#equals")
 const operatorBtn = document.querySelector(".operators")
 
-const btns = document.querySelectorAll("button");
-btns.forEach((btn) => {
-  
-  btn.addEventListener("click", (e) => {
+const numBtns = document.querySelectorAll(".numbers button");
+numBtns.forEach((numBtn) => {  
+  numBtn.addEventListener("click", (e) => {
     if(e.target === clearBtn){
+      displayElem.innerHTML = "0";
+      resetValue();
       return;
-    }
-    if(e.target === operatorBtn){
-      operator = `${btn.textContent}`;
-      secondDisplayValue += `${btn.textContent}`;
-    displayOutput.innerHTML = secondDisplayValue;
-    console.log(`Button ${btn.textContent} was clicked`);  
-    if(e.target === equalsBtn){
-      operate(operator, firstDisplayValue, secondDisplayValue)
-    }
-
-    }
-
-    if(e.target === equalsBtn){
-      operate(operator, firstDisplayValue, secondDisplayValue)
-    }
+      //todo: clear everything - firstDisplayValue
+    }    
+    displayNumbers(numBtn);
     
-    storeValue(btn);
-    
+    operatorBtns.forEach((operatorBtn) => {
+      operatorBtn.addEventListener("click", (e) => {
+          //storeValue()
+          if(e.target === equalsBtn){
+            console.log("clicked equals hereeeee")
+            secondNum = Number(displayElem.innerHTML);
+            console.log("operator: " + operator);
+            console.log("first num: " + firstNum);
+            console.log("second num: " + secondNum);
+            finalResult = operate(operator, firstNum, secondNum);
+            console.log(finalResult);
+            return finalResult;
+          }
+          //try to exit from parent function
+          if(finalResult)return;
+
+          firstNum = Number(displayElem.innerHTML);
+          //storeValue();
+          resetValue();
+          displayElem.innerHTML = `${operatorBtn.textContent}`;
+          operator = `${operatorBtn.textContent}`;
+          console.log(`Button ${operatorBtn.textContent} was clicked`); 
+          
+      })
+  })
+  
   });
 });
 
+function displayFinalResult(finalResult){
+  displayElem.innerHTML = finalResult;
+}
 
-function storeValue(clickedBtn){
-  firstDisplayValue += `${clickedBtn.textContent}`;
-    displayOutput.innerHTML = firstDisplayValue;
-    console.log(`Button ${btn.textContent} was clicked`);  
+const operatorBtns = document.querySelectorAll(".operators button")
+
+
+//function displayValue
+
+function resetValue(){
+  displayValue = "0";
+}
+
+function storeValue(){
+
+}
+
+function displayNumbers(clickedBtn){
+  if(displayValue === "0"){
+    displayValue = "";
+  }
+    displayValue += `${clickedBtn.textContent}`;
+    displayElem.innerHTML = displayValue;
+    console.log(`Button ${clickedBtn.textContent} was clicked`); 
+    //return firstDisplayValue; 
   
 }
