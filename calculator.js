@@ -1,99 +1,85 @@
-let firstNum;
-let operator;
-let secondNum;
-let finalResult = 0;
+let firstNum = "";
+let operator = "";
+let secondNum = "";
+let finalResult = undefined;
 
 function operate(operator, num1, num2) {
-  if (operator === "+") {
-    add(num1, num2);
-  } else if (operator == "-") {
-    subtract(num1, num2);
-  } else if (operator == "x") {
-    multiply(num1, num2);
-  } else if (operator == "/") {
-    divide(num1, num2);
+  switch (operator) {
+    case "+":
+      return num1 + num2;
+    case "-":
+      return num1 - num2;
+    case "x":
+      return num1 * num2;
+    case "/":
+      return num1 / num2;
+    default:
+      return "Error";
   }
-}
-
-function add(a, b) {
-  result = a+b;
-  return result;
-}
-
-function subtract(a, b) {
-  return (a - b);
-}
-
-function multiply(a, b) {
-  return (a * b);
-}
-
-function divide(a, b) {
-  return (a / b);
 }
 
 const displayElem = document.querySelector("#display");
 let displayValueWithZero = displayElem.innerHTML;
 let displayValue = "";
 const clearBtn = document.querySelector("#clear");
+
+const operatorBtns = document.querySelectorAll(".operators button")
+//const operatorBtn = document.querySelector(".operators")
 const equalsBtn = document.querySelector("#equals")
-const operatorBtn = document.querySelector(".operators")
 
 const numBtns = document.querySelectorAll(".numbers button");
 numBtns.forEach((numBtn) => {  
   numBtn.addEventListener("click", (e) => {
-    if(e.target === clearBtn){
-      displayElem.innerHTML = "0";
-      resetValue();
-      return;
-      //todo: clear everything - firstDisplayValue
-    }    
     displayNumbers(numBtn);
-    
-    operatorBtns.forEach((operatorBtn) => {
-      operatorBtn.addEventListener("click", (e) => {
-          //storeValue()
-          if(e.target === equalsBtn){
-            console.log("clicked equals hereeeee")
-            secondNum = Number(displayElem.innerHTML);
-            console.log("operator: " + operator);
-            console.log("first num: " + firstNum);
-            console.log("second num: " + secondNum);
-            finalResult = operate(operator, firstNum, secondNum);
-            console.log(finalResult);
-            return finalResult;
-          }
-          //try to exit from parent function
-          if(finalResult)return;
-
-          firstNum = Number(displayElem.innerHTML);
-          //storeValue();
-          resetValue();
-          displayElem.innerHTML = `${operatorBtn.textContent}`;
-          operator = `${operatorBtn.textContent}`;
-          console.log(`Button ${operatorBtn.textContent} was clicked`); 
-          
-      })
-  })
-  
   });
 });
 
-function displayFinalResult(finalResult){
-  displayElem.innerHTML = finalResult;
-}
+clearBtn.addEventListener("click", () => {
+    displayElem.innerHTML = "0";
+    firstNum = "";
+    secondNum = "";
+    operator = "";
+    resetValue();
+})
 
-const operatorBtns = document.querySelectorAll(".operators button")
+operatorBtns.forEach((operatorBtn) => {
+  operatorBtn.addEventListener("click", (e) => {
+      if(firstNum === ""){
+        //firstNum = displayElem.innerHTML;
+        firstNum = storeValue();
+        resetValue();
+        displayElem.innerHTML = `${operatorBtn.textContent}`;
+      operator = `${operatorBtn.textContent}`;
+      console.log(`Button ${operatorBtn.textContent} was clicked`); 
+      } else if (secondNum === "" && operator === ""){
+        displayElem.innerHTML = `${operatorBtn.textContent}`;
+      operator = `${operatorBtn.textContent}`;
+      console.log(`Button ${operatorBtn.textContent} was clicked AGAIN`); 
+      }    
+      
+  })
+})
 
-
-//function displayValue
+equalsBtn.addEventListener("click", () => {
+  if(firstNum !== "" || secondNum !== "" || operator !== ""){
+    secondNum = Number(displayElem.innerHTML);
+    // console.log("operator: " + operator);
+    // console.log("first num: " + firstNum);
+    // console.log("second num: " + secondNum);
+    finalResult = operate(operator, parseFloat(firstNum), parseFloat(secondNum));
+    displayElem.innerHTML = finalResult;
+    firstNum = finalResult;
+    secondNum = "";
+    operator = ""
+  }    
+})
 
 function resetValue(){
   displayValue = "0";
 }
 
 function storeValue(){
-
+  return displayElem.innerHTML;
 }
 
 function displayNumbers(clickedBtn){
@@ -103,6 +89,4 @@ function displayNumbers(clickedBtn){
     displayValue += `${clickedBtn.textContent}`;
     displayElem.innerHTML = displayValue;
     console.log(`Button ${clickedBtn.textContent} was clicked`); 
-    //return firstDisplayValue; 
-  
 }
