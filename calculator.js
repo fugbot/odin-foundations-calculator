@@ -55,6 +55,7 @@ operatorBtns.forEach((operatorBtn) => {
         displayElem.innerHTML = `${operatorBtn.textContent}`;
       operator = `${operatorBtn.textContent}`;
       console.log(`Button ${operatorBtn.textContent} was clicked AGAIN`); 
+      //todo: how to store second number in second run
       }    
       
   })
